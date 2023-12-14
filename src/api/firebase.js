@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import {initializeApp} from "firebase/app";
 
-import {getAuth, GoogleAuthProvider, signInWithPopup, signOut} from "firebase/auth";
+import {getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged} from "firebase/auth";
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -30,3 +30,10 @@ export const login = async () => signInWithPopup(auth, provider)
 export const logout = async () => signOut(auth)
     .then(() => null)
     .catch(console.error);
+
+// 전역 인증 객체에 연결해서, 사용자 정보를 받아오고 callback에 user를 전달해서 실행
+export const onUserStateChange = (callback) => {
+    onAuthStateChanged(auth, (user) => {
+        callback(user);
+    })
+};
