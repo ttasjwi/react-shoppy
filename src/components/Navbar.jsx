@@ -17,7 +17,9 @@ const Navbar = () => {
             </Link>
             <nav className='flex items-center gap-4 font-semibold'>
                 <Link to='/products'>Products</Link>
-                <Link to='/my-cart'>MyCart</Link>
+                {
+                    user && <Link to='/my-cart'>MyCart</Link>
+                }
                 {user && user.isAdmin && (
                     <Link to='/products/register' className='text-2xl'>
                         <BsFillPencilFill/>

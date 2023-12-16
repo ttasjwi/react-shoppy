@@ -5,7 +5,6 @@ const AuthContext = createContext();
 
 export const AuthContextProvider = ({children}) => {
     const [user, setUser] = useState(null);
-
     // 페이지가 로딩되면, onUserStateChange에 콜백을 전달
     useEffect(() => {
         // 사용자 정보를 가져와서 setUser 하도록 등록
