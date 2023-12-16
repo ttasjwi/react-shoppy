@@ -4,6 +4,7 @@ import {FiShoppingBag} from 'react-icons/fi';
 import {BsFillPencilFill} from 'react-icons/bs';
 import {login, logout, onUserStateChange} from "../api/firebase";
 import User from "./User";
+import Button from "./ui/Button";
 
 const Navbar = () => {
     const [user, setUser] = useState(null);
@@ -11,7 +12,10 @@ const Navbar = () => {
     // 페이지가 로딩되면, onUserStateChange에 콜백을 전달
     useEffect(() => {
         // 사용자 정보를 가져와서 setUser 하도록 등록
-        onUserStateChange(setUser)
+        onUserStateChange((user) => {
+            console.log(user);
+            setUser(user);
+        })
     }, []);
 
     return (
@@ -23,13 +27,15 @@ const Navbar = () => {
             <nav className='flex items-center gap-4 font-semibold'>
                 <Link to='/products'>Products</Link>
                 <Link to='/my-cart'>MyCart</Link>
-                <Link to='/products/register' className='text-2xl'>
-                    <BsFillPencilFill/>
-                </Link>
-                {user && <User user={user} />}
+                {user && user.isAdmin && (
+                    <Link to='/products/register' className='text-2xl'>
+                        <BsFillPencilFill/>
+                    </Link>)
+                }
+                {user && <User user={user}/>}
                 {user
-                    ? <button type='button' onClick={logout}>Logout</button>
-                    : <button type='button' onClick={login}>Login</button>
+                    ? <Button text={'Logout'} onClick={logout} />
+                    : <Button text={'Login'} onClick={login} />
                 }
             </nav>
         </header>
