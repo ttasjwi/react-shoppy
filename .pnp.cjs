@@ -26,6 +26,7 @@ const RAW_RUNTIME_STATE =
       [null, {\
         "packageLocation": "./",\
         "packageDependencies": [\
+          ["@firebase/app", "npm:0.9.25"],\
           ["@tanstack/react-query", "virtual:cd6d623eb3ff30d95df0ddd3161c89a83be37aaab4c28465cdfa4996eb788205b8bef1928f465dd65814afa78a0bec7a982528cf95783006f56956d7fed79596#npm:5.13.4"],\
           ["@tanstack/react-query-devtools", "virtual:cd6d623eb3ff30d95df0ddd3161c89a83be37aaab4c28465cdfa4996eb788205b8bef1928f465dd65814afa78a0bec7a982528cf95783006f56956d7fed79596#npm:5.13.5"],\
           ["@testing-library/jest-dom", "npm:5.17.0"],\
@@ -16669,6 +16670,7 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./",\
         "packageDependencies": [\
           ["react-shoppy", "workspace:."],\
+          ["@firebase/app", "npm:0.9.25"],\
           ["@tanstack/react-query", "virtual:cd6d623eb3ff30d95df0ddd3161c89a83be37aaab4c28465cdfa4996eb788205b8bef1928f465dd65814afa78a0bec7a982528cf95783006f56956d7fed79596#npm:5.13.4"],\
           ["@tanstack/react-query-devtools", "virtual:cd6d623eb3ff30d95df0ddd3161c89a83be37aaab4c28465cdfa4996eb788205b8bef1928f465dd65814afa78a0bec7a982528cf95783006f56956d7fed79596#npm:5.13.5"],\
           ["@testing-library/jest-dom", "npm:5.17.0"],\
