@@ -1,12 +1,13 @@
 import React from 'react';
 import Products from "../components/Products";
+import Banner from "../components/Banner";
 
 const Home = () => {
 
     return (
         <>
-            <p>배너</p>
-            <Products />
+            <Banner/>
+            <Products/>
         </>
     );
 }
