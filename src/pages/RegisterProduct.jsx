@@ -36,18 +36,20 @@ const RegisterProduct = () => {
                 registerNewProduct(product, url)
                     .then(() => {
                         setSuccess('성공적으로 제품이 추가되었습니다.');
-                        setTimeout(() => setSuccess(null), 4000);
-                    })
+                        setTimeout(() => {
+                            setSuccess(null);
+                        }, 4000);
+                    });
             })
             .finally(() => setIsUploading(false));
     };
 
     return (
-        <section>
-            <h2>새로운 제품 등록</h2>
-            {success && <p>✅ {success}</p>}
-            {file && <img src={URL.createObjectURL(file)} alt='local file' />}
-            <form onSubmit={handleSubmit}>
+        <section className='w-full text-center'>
+            <h2 className='text-2xl font-bold my-4'>새로운 제품 등록</h2>
+            {success && <p className='my-2'>✅ {success}</p>}
+            {file && <img className='w-96 mx-auto mb-2' src={URL.createObjectURL(file)} alt='local file' />}
+            <form onSubmit={handleSubmit} className='flex flex-col px-12'>
                 <input type='file'
                        accept='image/*'
                        name='imageFile'
