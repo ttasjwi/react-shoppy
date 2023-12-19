@@ -1,11 +1,9 @@
 import React from 'react';
+import Products from "../components/Products";
 
 const AllProducts = () => {
-
     return (
-        <>
-            상품 목록 페이지입니다.
-        </>
+        <Products/>
     );
 }
 

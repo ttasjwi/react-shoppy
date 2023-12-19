@@ -1,10 +1,12 @@
 import React from 'react';
+import Products from "../components/Products";
 
 const Home = () => {
 
     return (
         <>
-            홈페이지입니다.
+            <p>배너</p>
+            <Products />
         </>
     );
 }
