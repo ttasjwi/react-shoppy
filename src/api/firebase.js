@@ -20,11 +20,8 @@ const database = getDatabase(app);
 const provider = new GoogleAuthProvider();
 
 export const login = () => signInWithPopup(auth, provider)
-    .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        return result.user;
-    }).catch(console.error);
+    .then(result => result.user)
+    .catch(console.error);
 
 export const logout = () => signOut(auth);
 
@@ -66,3 +63,11 @@ export const registerNewProduct = async (product, image) => {
         options: product.options.split(',')
     })
 };
+
+export const loadProducts = async () =>
+    get(ref(database, 'products'))
+        .then(snapShot =>
+            snapShot.exists()
+                ? Object.values(snapShot.val())
+                : []
+        );
