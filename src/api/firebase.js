@@ -2,8 +2,8 @@
 import {initializeApp} from "firebase/app";
 
 import {getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut} from "firebase/auth";
-import {get, getDatabase, ref} from "firebase/database";
-
+import {get, getDatabase, ref, set} from "firebase/database";
+import {v4 as uuid} from 'uuid';
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -53,5 +53,16 @@ export const onUserStateChange = (callback) => {
         // 사용자가 admin인지 여부를 판단하여, 사용자에 isAdminFlag를 추가함
         const updatedUser = user ? await addIsAdminFlag(user) : null;
         callback(updatedUser);
+    })
+};
+
+export const registerNewProduct = async (product, image) => {
+    const id = uuid();
+    return set(ref(database, `products/${id}`), {
+        ...product,
+        id,
+        price: parseInt(product.price),
+        image,
+        options: product.options.split(',')
     })
 };
