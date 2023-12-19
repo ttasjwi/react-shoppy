@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import Button from "../components/ui/Button";
 import uploadImage from "../api/imageUploader";
+import {registerNewProduct} from "../api/firebase";
 
 const RegisterProduct = () => {
     const [product, setProduct] = useState({});
@@ -10,7 +11,7 @@ const RegisterProduct = () => {
         const {name, value, files} = e.target;
 
         // 파일일 경우, 파일 상태 변경 반영하고 return
-        if (name === 'file') {
+        if (name === 'imageFile') {
             setFile(files && files[0]);
             return;
         }
@@ -29,6 +30,7 @@ const RegisterProduct = () => {
             .then(url => {
                 console.log(url);
                 // Firebase에 새로운 제품을 추가
+                registerNewProduct(product, url);
             })
     };
 
@@ -38,10 +40,12 @@ const RegisterProduct = () => {
             <form onSubmit={handleSubmit}>
                 <input type='file'
                        accept='image/*'
-                       name='file'
-                       required onChange={handleChange}/>
+                       name='imageFile'
+                       required
+                       onChange={handleChange}
+                />
                 <input type='text'
-                       name='productName'
+                       name='name'
                        value={product.name ?? ''}
                        placeholder='제품명'
                        required
