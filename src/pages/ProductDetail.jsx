@@ -40,20 +40,30 @@ const ProductDetail = () => {
 
     return (
         <section>
-            <p>{product.category}</p>
-            <img src={product.image} alt={product.name}/>
-            <div>
-                <h2>{product.name}</h2>
-                <p>₩{product.price}</p>
-                <p>{product.description}</p>
-                <label htmlFor='options'>옵션:</label>
-                <select id='options' onChange={handleSelect} value={selected}>
-                    {product.options?.map((option, index) => (
-                        <option key={index}>{option}</option>
-                    ))}
-                </select>
-                <Button text='장바구니에 추가' onClick={handleClick}/>
-            </div>
+            <p className='mx-12 mt-4 text-gray-700'>{product.category}</p>
+            <section className='flex flex-col md:flex-row p-4'>
+                <img className='w-full px-4 basis-7/12' src={product.image} alt={product.name}/>
+                <div className='w-full basis-5/12 flex flex-col p-4'>
+                    <h2 className='text-3xl font-bold py-2'>{product.name}</h2>
+                    <p className='text-2xl font-bold py-2 border-b border-gray-400'>₩{product.price}</p>
+                    <p className='py-4 text-lg'>{product.description}</p>
+                    <div className='flex items-center'>
+                        <label
+                            className='text-brand font-bold'
+                            htmlFor='select'>
+                            옵션:
+                        </label>
+                        <select
+                            className='p-2 m-4 flex-1 border-2 border-dashed border-brand outline-none'
+                            id='select'
+                            onChange={handleSelect} value={selected}
+                        >
+                            {product.options?.map((option, index) => <option key={index}>{option}</option>)}
+                        </select>
+                    </div>
+                    <Button text='장바구니에 추가' onClick={handleClick}/>
+                </div>
+            </section>
         </section>
     );
 }
