@@ -71,3 +71,12 @@ export const loadProducts = async () =>
                 ? Object.values(snapShot.val())
                 : []
         );
+
+export const loadProduct = async (productId) =>
+    get(ref(database, `products/${productId}`))
+        .then(snapShot => {
+            if (snapShot.exists()) {
+                return snapShot.val();
+            }
+            return null;
+        });

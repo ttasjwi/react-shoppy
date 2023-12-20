@@ -9,7 +9,6 @@ export const AuthContextProvider = ({children}) => {
     useEffect(() => {
         // 사용자 정보를 가져와서 setUser 하도록 등록
         onUserStateChange((user) => {
-            console.log(user);
             setUser(user);
         })
     }, []);
