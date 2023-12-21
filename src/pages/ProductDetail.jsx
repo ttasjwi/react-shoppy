@@ -1,11 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import {useQuery} from "@tanstack/react-query";
-import {loadProduct} from "../api/firebase";
+import {loadProduct, upsertCart} from "../api/firebase";
 import Button from "../components/ui/Button";
+import {useAuthContext} from "../context/AuthContext";
 
 const ProductDetail = () => {
     const {productId} = useParams();
+    const {userId} = useAuthContext();
+
     const {isLoading, error, data: product} = useQuery({
         queryKey: ['product', productId],
         queryFn: () => loadProduct(productId),
@@ -23,8 +26,16 @@ const ProductDetail = () => {
         setSelected(e.target.value);
     };
 
-    const handleClick = (e) => {
-        // 장바구니에 추가하면 됨
+    const handleClick = () => {
+        const additionalProduct = {
+            id: product.id,
+            name: product.name,
+            image: product.image,
+            price: product.price,
+            option: selected,
+            quantity: 1
+        };
+        upsertCart(userId, additionalProduct);
     };
 
     if (isLoading) {
