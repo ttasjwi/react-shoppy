@@ -3,7 +3,9 @@ import {AiOutlineMinusSquare, AiOutlinePlusSquare} from 'react-icons/ai';
 import {RiDeleteBin5Fill} from 'react-icons/ri';
 import {removeFromCart, upsertCart} from "../api/firebase";
 
-const CartItem = ({product, product: {id, name, image, option, quantity}, userId}) => {
+const ICON_CLASS = 'transition-all cursor-pointer hover:text-brand hover:scale-105 mx-1';
+
+const CartItem = ({product, product: {id, name, price, image, option, quantity}, userId}) => {
     const handleMinus = () => {
         if (quantity < 2) return;
         upsertCart(userId, {...product, quantity: quantity - 1});
@@ -17,16 +19,19 @@ const CartItem = ({product, product: {id, name, image, option, quantity}, userId
     };
 
     return (
-        <li>
-            <img src={image} alt={name}/>
-            <div>
-                <p>{name}</p>
-                <p>{option}</p>
-                <div>
-                    <AiOutlineMinusSquare onClick={handleMinus}/>
+        <li className='flex justify-between my-2 items-center'>
+            <img className='w-24 md:w-48 rounded-lg' src={image} alt={name}/>
+            <div className='flex flex-1 justify-between ml-4'>
+                <div className='basis-3/5'>
+                    <p className='text-lg'>{name}</p>
+                    <p className='text-xl font-bold text-brand'>{option}</p>
+                    <p>₩{price}</p>
+                </div>
+                <div className='text-2xl flex items-center'>
+                    <AiOutlineMinusSquare className={ICON_CLASS} onClick={handleMinus}/>
                     <span>{quantity}</span>
-                    <AiOutlinePlusSquare onClick={handlePlus}/>
-                    <RiDeleteBin5Fill onClick={handleDelete}/>
+                    <AiOutlinePlusSquare className={ICON_CLASS} onClick={handlePlus}/>
+                    <RiDeleteBin5Fill className={ICON_CLASS} onClick={handleDelete}/>
                 </div>
             </div>
         </li>
