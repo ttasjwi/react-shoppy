@@ -2,7 +2,7 @@
 import {initializeApp} from "firebase/app";
 
 import {getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut} from "firebase/auth";
-import {get, getDatabase, ref, set} from "firebase/database";
+import {get, getDatabase, ref, remove, set} from "firebase/database";
 import {v4 as uuid} from 'uuid';
 
 const firebaseConfig = {
@@ -80,3 +80,17 @@ export const loadProduct = async (productId) =>
             }
             return null;
         });
+
+export const getCart = async (userId) =>
+    get(ref(database, `carts/${userId}`))
+        .then(snapShot => {
+            const items = snapShot.val() || {};
+            return Object.values(items);
+        })
+
+export const upsertCart = async (userId, product) =>
+    set(ref(database, `carts/${userId}/${product.id}`), product);
+
+export const removeFromCart = async (userId, productId) =>
+    remove(ref(database, `carts/${userId}/${productId}`))
+
