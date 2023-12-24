@@ -1,14 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import {useQuery} from "@tanstack/react-query";
-import {loadProduct, upsertCart} from "../api/firebase";
+import {loadProduct} from "../api/firebase";
 import Button from "../components/ui/Button";
-import {useAuthContext} from "../context/AuthContext";
+import useCart from "../hooks/useCart";
 
 const ProductDetail = () => {
     const {productId} = useParams();
-    const {userId} = useAuthContext();
-
     const {isLoading, error, data: product} = useQuery({
         queryKey: ['product', productId],
         queryFn: () => loadProduct(productId),
@@ -21,6 +19,10 @@ const ProductDetail = () => {
             setSelected(product.options[0]);
         }
     }, [product]);
+
+    const {upsertCart} = useCart();
+
+    const [success, setSuccess] = useState();
 
     const handleSelect = (e) => {
         setSelected(e.target.value);
@@ -35,7 +37,12 @@ const ProductDetail = () => {
             option: selected,
             quantity: 1
         };
-        upsertCart(userId, additionalProduct);
+        upsertCart.mutate(additionalProduct, {
+            onSuccess: () => {
+                setSuccess('장바구니에 추가되었습니다.');
+                setTimeout(() => setSuccess(null), 3000);
+            }
+        });
     };
 
     if (isLoading) {
@@ -72,6 +79,7 @@ const ProductDetail = () => {
                             {product.options?.map((option, index) => <option key={index}>{option}</option>)}
                         </select>
                     </div>
+                    {success && <p className='my-2'>✅{success}</p>}
                     <Button text='장바구니에 추가' onClick={handleClick}/>
                 </div>
             </section>
