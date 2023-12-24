@@ -1,21 +1,15 @@
 import React from 'react';
-import {useAuthContext} from "../context/AuthContext";
-import {getCart} from "../api/firebase";
-import {useQuery} from "@tanstack/react-query";
 import CartItem from "../components/CartItem";
 import PriceCard from "../components/PriceCard";
 import {BsFillPlusCircleFill} from 'react-icons/bs';
 import {FaEquals} from 'react-icons/fa';
 import Button from "../components/ui/Button";
+import useCart from "../hooks/useCart";
 
 const SHIPPING_PRICE = 3000;
 
 const MyCart = () => {
-    const {userId} = useAuthContext();
-    const {isLoading, error, data: products} = useQuery({
-        queryKey: ['carts'],
-        queryFn: () => getCart(userId)
-    });
+    const {cartQuery: {isLoading, error, data:products}} = useCart();
 
     if (error) return <p>Cart Loading Error!!!</p>
     if (isLoading) return <p>loading...</p>
@@ -31,8 +25,7 @@ const MyCart = () => {
             {hasProducts && (
                 <>
                     <ul className='border-b border-gray-300 mb-8 p-4 px-8'>
-                        {products && products.map(product => <CartItem key={product.id} product={product}
-                                                                       userId={userId}/>)}
+                        {products && products.map(product => <CartItem key={product.id} product={product}/>)}
                     </ul>
                     <div className='flex justify-between items-center mb-6 p-2 md:px-8 lg:px-16'>
                         <PriceCard text="상품 총액" price={totalPrice}/>

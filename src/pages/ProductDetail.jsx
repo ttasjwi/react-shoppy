@@ -1,14 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import {useQuery} from "@tanstack/react-query";
-import {loadProduct, upsertCart} from "../api/firebase";
+import {loadProduct} from "../api/firebase";
 import Button from "../components/ui/Button";
-import {useAuthContext} from "../context/AuthContext";
+import useCart from "../hooks/useCart";
 
 const ProductDetail = () => {
     const {productId} = useParams();
-    const {userId} = useAuthContext();
-
     const {isLoading, error, data: product} = useQuery({
         queryKey: ['product', productId],
         queryFn: () => loadProduct(productId),
@@ -22,6 +20,7 @@ const ProductDetail = () => {
         }
     }, [product]);
 
+    const {upsertCart} = useCart();
     const handleSelect = (e) => {
         setSelected(e.target.value);
     };
@@ -35,7 +34,7 @@ const ProductDetail = () => {
             option: selected,
             quantity: 1
         };
-        upsertCart(userId, additionalProduct);
+        upsertCart.mutate(additionalProduct);
     };
 
     if (isLoading) {
